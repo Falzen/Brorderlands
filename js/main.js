@@ -9,7 +9,6 @@ $(document).ready(function() {
 function init() {
 	setWeaponIds();
 	player = new Player(playerData);
-	console.log('player : ', player);
 	initPlayer();
 	fillInventory();
 	setEventListeners();
@@ -19,21 +18,18 @@ function init() {
 
 function setEventListeners() {
 	$('#inventory_btn').on('click', function() {
-		console.log('click inventory');
 		showInventory = true;
 		showShop = false;
 		showFight = false;
 		manageScreen();
 	});
 	$('#shop_btn').on('click', function() {
-		console.log('click shop');
 		showInventory = true;
 		showShop = true;
 		showFight = false;
 		manageScreen();
 	});
 	$('#fight_btn').on('click', function() {
-		console.log('click fight');
 		showInventory = false;
 		showShop = false;
 		showFight = true;
@@ -149,7 +145,6 @@ function initPlayer() {
 	player.backpack.push(getRandomWeapon());
 	player.backpack.push(getRandomWeapon());
 	player.backpack.push(getRandomWeapon());
-	console.log('player.backpack : ', player.backpack);
 }
 
 
@@ -160,7 +155,6 @@ function getRandomWeapon() {
 	let randomWeaponsType = getRandomMapKey(allWeaponsMap);
 	let randomWeaponList = allWeaponsMap.get(randomWeaponsType);
 	let randomWeapon = randomWeaponList[getRandomInt(0,randomWeaponList.length-1)];
-	console.log('randomWeapon : ', randomWeapon);
 	return randomWeapon;
 }
 function getRandomMapKey(theMap) {
@@ -210,10 +204,9 @@ function refreshEquippedWeapons() {
 			currentlyEquippedWeapons.push(player.backpack[i]);
 		}
 	}
-	console.log('currentlyEquippedWeapons : ', currentlyEquippedWeapons);
 	for (var i = 0; i < currentlyEquippedWeapons.length; i++) {
 		let w = currentlyEquippedWeapons[i]
-		op += '<div id="playerWeapon_A" data-id="' + w.id + '">';
+		op += '<li id="playerWeapon_A" data-id="' + w.id + '">';
 			op += '<div class="weaponName">';
 				op += w.name + '<br/><span>(' + w.type + ')</span>';
 			op += '</div>';
@@ -224,12 +217,55 @@ function refreshEquippedWeapons() {
 				}
 			op += '</div>';
 			op += '<button onclick="fireWeaponById(' + w.id + ')">Fire</button>';
-		op += '</div>';
+		op += '</li>';
 	}
 	$('#equipped-weapons-container ul').html(op);
 }
 
+function fireWeaponById(wid) {
+	let targetIsWeak = false
 
+
+	let firedWeaponList = player.backpack.filter(function(weapon) {
+		return weapon.id == wid;
+	});
+	let simpleDamageRoll = firedWeaponList[0].dmg;
+	let bonusDamageRoll, bonusDamage, bonusDamageType;
+
+	let simpleDamage = rolls(simpleDamageRoll).result.total
+
+	if(firedWeaponList[0].bonus != null) {
+		bonusDamageRoll = firedWeaponList[0].bonus.split(' ')[0];
+		console.log('bonusDamageRoll : ', bonusDamageRoll);
+		bonusDamage = rolls(bonusDamageRoll).result.total;
+		console.log('bonusDamage : ', bonusDamage);
+		bonusDamageType = firedWeaponList[0].bonus.split(' ')[1];
+		console.log('bonusDamageType : ', bonusDamageType);
+		// debug
+		targetIsWeak = Math.random() > 0.5;
+	}
+
+	let msg = 'Bang! This shot did ' + simpleDamage;
+	if(bonusDamage) {
+		msg += ' (+ ' + bonusDamage;
+		if(bonusDamageType && targetIsWeak) {
+			bonusDamage *= 2
+			msg += ' doubled = ' + bonusDamage + ' !)';
+		} else {
+			msg += ')';
+		}
+	} else { bonusDamage = 0; }
+	msg += ' points of damage.'; 
+	if(1*simpleDamage + 1*bonusDamage > 20) {
+		msg += ' Ouch !';
+	}
+	console.log(msg);
+	// console.log('- - - - - - - - - - - - -');
+	// console.log('- - - - - BANG! - - - - -');
+	// console.log(rolls(firedWeaponList[0].dmg).result.total);
+	// console.log('- - - - bonus bang - - - ');
+	// console.log(rolls(firedWeaponList[0].bonus.split(' ')[0]).result.total);
+}
 
 
 

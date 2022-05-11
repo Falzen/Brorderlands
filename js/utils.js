@@ -3,6 +3,9 @@ function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+// let fibo = [1,2,3,5,8,13,21];
+// console.log('charge estimée : ', fibo[getRandomInt(0,fibo.length-1)]);
+
 function makeMapByAttrFromList(list, attrName) {
 	if(!attrName) {
 		attrName = 'name';
@@ -43,6 +46,7 @@ function rolls(str) { // ex: 3d6+4
 	if(str.split('d') != null && str.split('d').length != 2) {
 		return null;
 	}
+	let response = {};
 	let result = 0;
 	let staticBonus = 0;
 	let nbDice = parseInt(str.split('d')[0]);// ex: 3
@@ -62,9 +66,17 @@ function rolls(str) { // ex: 3d6+4
 	if(mods.indexOf('-') != -1) {
 		staticBonus *= -1;
 	}
+	response.result = {};
+	response.rollStr = str;
+	response.nbDice = nbDice;
+	response.typeDice = typeDice;
+	response.staticBonus = staticBonus;
+	response.result.simpleTotal = result; 
+	response.result.staticBonus = staticBonus;
 	result += staticBonus;
+	response.result.total = result;
 	//console.log('Roll ('+str+') : ' + individualRollsStr + ' + ' + staticBonus + ' => ' + result);
-	return result;
+	return response;
 }
 
 function roll(d) {

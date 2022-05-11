@@ -6,7 +6,7 @@ body {
     background-color: #25292c;
     font-size: 12px;
     font-family: consolas;
-    zoom:  0.85;
+    zoom: 0.85;
 }
 ul {
 	list-style: none;
@@ -14,24 +14,24 @@ ul {
 	margin: 0;
 }
 section {
-	width:  100%;
+	width: 100%;
 }
 
 .is-flex {
-	display:  flex;
+	display: flex;
 	
 }
 .is-flex-row-nw {
-	display:  flex;
+	display: flex;
 	flex-flow: row nowrap;
 }
 .is-flex-row-nw-spar {
-	display:  flex;
+	display: flex;
 	flex-flow: row nowrap;
 	justify-content: space-around;
 }
 .is-flex-row-nw-spbe {
-	display:  flex;
+	display: flex;
 	flex-flow: row nowrap;
 	justify-content: space-between;
 }
@@ -41,8 +41,8 @@ section {
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
-	width:  1400px;
-	height:  700px;
+	width: 1400px;
+	height: 700px;
 	background-color: beige;
 	margin: 10px auto;
 }
@@ -51,6 +51,7 @@ section {
 	display: flex;
 	flex-flow: row nowrap;
 	justify-content: space-between;
+	height: 100%;
 }
 
 
@@ -63,11 +64,11 @@ section {
 
 
 #inventory {
-	width:  300px;
+	width: 300px;
 	background-color: lightblue;
 }
 #shop {
-	width:  700px;	
+	width: 700px;	
 	background-color: lightgreen;
 }
 
@@ -80,7 +81,7 @@ section {
 
 
 .one-weapon {
-	margin:  3px;
+	margin: 3px;
 	background-color: whitesmoke;
 	height: 90px;
 	user-select: none;
@@ -88,25 +89,25 @@ section {
 }
 .one-weapon .catch-weapon-click {
 	position: absolute;
-	top:  0;
-	left:  0;
-	width:  100%;
-	height:  100%;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
 }
 .one-weapon p {
-	margin:  2px 0;
+	margin: 2px 0;
 	text-align: center;
 }
 
 .one-weapon .item-top-container {
-	padding:  0 6px;
+	padding: 0 6px;
 }
 
 .one-weapon .magazine-stat,
 .one-weapon .item-rarity {
 	position: relative;
-	width:  46px;
-	height:  26px;
+	width: 46px;
+	height: 26px;
 }
 .one-weapon .magazine-stat span {
 	font-size: 12px;
@@ -119,11 +120,11 @@ section {
 
 .one-weapon .magazine-stat img {
 	position: absolute;
-	width:  100%;
-	top:  0;
-	left:  0;
-	transform:  rotateZ(45deg);
-	opacity:  0.2;
+	width: 100%;
+	top: 0;
+	left: 0;
+	transform: rotateZ(45deg);
+	opacity: 0.2;
 }
 
 .one-weapon .item-name {
@@ -133,20 +134,69 @@ section {
     font-size: 21px;
 }
 .one-weapon .dmg-bonus {
-	font-size:  12px;
+	font-size: 12px;
 }
 
 
 .one-weapon.is-equipped::before {
-	content:  "EQUIPPED";
-	color:  black;
-	opacity:  1;
+	content: "EQUIPPED";
+	color: black;
+	opacity: 1;
 	position: absolute;
-	top:  25px;
-	right:  25px;
+	top: 25px;
+	right: 25px;
 	transform-origin: center;
-	transform:  rotateZ(-13deg);
+	transform: rotateZ(-13deg);
 	font-size: 28px;
 	text-shadow: 1px 1px 2px black;
 	text-shadow: #333 1px 0 10px;
 }
+
+
+
+
+
+
+#fight {
+	background-color: rgba(200,200,200,0.3);
+	height: 100%;
+}
+#fight-content {
+	background-color: rgba(180,180,180,0.3);
+	height: 100%;
+}
+
+
+
+#enemies-container {
+	min-height: 160px;
+	height: 25%;
+	background-color: rgba(220,220,220,0.3);
+}
+
+#noMansLand {
+	height: 50%;
+	background-color: rgba(160,160,160,0.3);
+}
+
+#player-side {
+	min-height: 160px;
+	height: 25%;
+	background-color: rgba(210,210,210,0.3);
+}
+
+#equipped-weapons-container ul {
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: center;
+}
+
+#equipped-weapons-container li:not(:last-child) {
+	margin-right:  6px;
+}
+
+#equipped-weapons-container li {
+	background-color: rgba(210,110,110,0.3);
+}
+
+
