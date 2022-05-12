@@ -9,6 +9,13 @@ $(document).ready(function() {
 function init() {
 	setWeaponIds();
 	player = new Player(playerData);
+	for(let i=0; i<enemiesDataList.length; i++) {
+		enemies.push(new Character(enemiesDataList[i]));
+	}
+	for(let i=0; i<enemies.length; i++) {
+		enemies[i].equip.weaponIds.push(enemies[i].backpack[0]?.id);
+	}
+	console.log('enemies : ', enemies);
 	initPlayer();
 	fillInventory();
 	setEventListeners();
@@ -38,11 +45,45 @@ function setEventListeners() {
 	});
 
 	$('body').on('click', '.one-weapon', function(ev) {
-
-		
 		manageIsEquipped(ev.target.dataset.id);
 	});
 
+	$('body').on('click', '.one-enemy', function(ev) {
+		let aimedTargetId = ev.target.dataset.id;
+		currentTarget = enemies.filter(function(enemy) {
+			return aimedTargetId == enemy.id;
+		})[0];
+		showTarget();
+	});
+
+}
+
+var currentTarget;
+
+
+function showTarget() {
+	if($('#'+currentTarget.id).hasClass('is-target')) {
+		$('.one-enemy').removeClass('is-target');
+		return false;
+
+	}
+	$('.one-enemy').removeClass('is-target');
+	$('#'+currentTarget.id).addClass('is-target');
+}
+
+function unselectAllTargets() {
+}
+
+
+function getAllEquippedWeapons(character) {
+	let equippedWeapons = character.backpack.filter(function(weapon) {
+		return character.equip.weaponIds.indexOf(weapon.id) != -1;
+	});
+	return equippedWeapons;
+}
+
+function getEquippedWeaponByIndex(character, idx) {
+	return getAllEquippedWeapons(character)[idx];
 }
 
 function manageIsEquipped(weaponId) {
@@ -80,6 +121,8 @@ function manageScreen() {
 
 	if(showFight) {
 		$('#fight').show();
+
+	refreshEnemies();
 	} else {
 		$('#fight').hide();
 	}
@@ -106,6 +149,7 @@ allWeaponsMap.set('pistols', pistolsList);
 
 var weapons_types = allWeaponsMap.keys();
 var weaponIdCpt = 0;
+var characterIdCpt = 0;
 
 function setWeaponIds() {
 	for (const [key, value] of allWeaponsMap.entries()) {
@@ -125,9 +169,14 @@ rarityToBackgroundCssRule.set('Purple', 'background: linear-gradient(15deg, whit
 rarityToBackgroundCssRule.set('Orange', 'background: linear-gradient(15deg, whitesmoke 60%, darkorange 130%);');
 
 var playerData = {
+	id: ++characterIdCpt,
 	name: 'Roland',
 	level: '1',
-	stats: {},
+	hp: 90,
+	stats: {
+		maxHp: 90,
+		shieldTempValue: 210
+	},
 	backpack: [],
 	equip: {
 		weaponIds: [],
@@ -138,6 +187,40 @@ var playerData = {
 }
 
 var player;
+
+var enemiesDataList = [{
+	id: ++characterIdCpt,
+	name: 'Bandit recrue',
+	level: '1',
+	hp: 35,
+	stats: {
+		maxHp: 35,
+		shieldTempValue: 70
+	},
+	backpack: [getRandomWeapon()],
+	equip: {
+		weaponIds: [],
+		shieldId: null,
+	},
+	money: 80,
+},{
+	id: ++characterIdCpt,
+	name: 'Bandit recrue',
+	level: '1',
+	hp: 35,
+	stats: {
+		maxHp: 35,
+		shieldTempValue: 70
+	},
+	backpack: [getRandomWeapon()],
+	equip: {
+		weaponIds: [],
+		shieldId: null,
+	},
+	money: 80,
+}];
+
+var enemies = [];
 
 function initPlayer() {
 	player.backpack.push(getRandomWeapon());
@@ -216,33 +299,33 @@ function refreshEquippedWeapons() {
 					op += '<br/><span>(' + w.bonus + ')</span>';
 				}
 			op += '</div>';
-			op += '<button onclick="fireWeaponById(' + w.id + ')">Fire</button>';
+			op += '<button onclick="manageShot(' + w.id + ')">Fire</button>';
 		op += '</li>';
 	}
 	$('#equipped-weapons-container ul').html(op);
 }
 
-function fireWeaponById(wid) {
+function getWeaponDamage(weapon, target) {
 	let targetIsWeak = false
+	let damageObj = {};
 
-
-	let firedWeaponList = player.backpack.filter(function(weapon) {
-		return weapon.id == wid;
-	});
-	let simpleDamageRoll = firedWeaponList[0].dmg;
-	let bonusDamageRoll, bonusDamage, bonusDamageType;
+	let simpleDamageRoll = weapon.dmg;
+	let bonusDamageRoll, bonusDamage = 0;
+	let bonusDamageType;
 
 	let simpleDamage = rolls(simpleDamageRoll).result.total
+	damageObj.simpleDamage = simpleDamage;
 
-	if(firedWeaponList[0].bonus != null) {
-		bonusDamageRoll = firedWeaponList[0].bonus.split(' ')[0];
-		console.log('bonusDamageRoll : ', bonusDamageRoll);
+	if(weapon.bonus != null) {
+		bonusDamageRoll = weapon.bonus.split(' ')[0];
 		bonusDamage = rolls(bonusDamageRoll).result.total;
-		console.log('bonusDamage : ', bonusDamage);
-		bonusDamageType = firedWeaponList[0].bonus.split(' ')[1];
-		console.log('bonusDamageType : ', bonusDamageType);
+		damageObj.bonusDamage = bonusDamage;
+		bonusDamageType = weapon.bonus.split(' ')[1];
+		damageObj.bonusDamageType = bonusDamageType;
 		// debug
-		targetIsWeak = Math.random() > 0.5;
+		// targetIsWeak = Math.random() > 0.5; // should recieve target as argument, test against type
+		targetIsWeak = getweaknessesByAttackType(bonusDamageType).indexOf(target.type) != -1;
+		damageObj.targetIsWeak = targetIsWeak;
 	}
 
 	let msg = 'Bang! This shot did ' + simpleDamage;
@@ -254,21 +337,93 @@ function fireWeaponById(wid) {
 		} else {
 			msg += ')';
 		}
-	} else { bonusDamage = 0; }
+	} else { 
+		bonusDamage = 0; 
+	}
+
+	damageObj.bonusDamage = bonusDamage;
 	msg += ' points of damage.'; 
+	msg += '\nTotal : ' + (1*simpleDamage + 1*bonusDamage) + ' dmg.';
+
+	damageObj.totalDamage = (1*simpleDamage + 1*bonusDamage);
 	if(1*simpleDamage + 1*bonusDamage > 20) {
 		msg += ' Ouch !';
 	}
 	console.log(msg);
-	// console.log('- - - - - - - - - - - - -');
-	// console.log('- - - - - BANG! - - - - -');
-	// console.log(rolls(firedWeaponList[0].dmg).result.total);
-	// console.log('- - - - bonus bang - - - ');
-	// console.log(rolls(firedWeaponList[0].bonus.split(' ')[0]).result.total);
+	
+	return damageObj;
+}
+
+function getweaknessesByAttackType(type) {
+	let weaknesses = [];
+	switch(type) {
+		case 'corrosive':
+			weaknesses.push('machine');
+		break;
+		case 'shock':
+			weaknesses.push('shield');
+		break;
+		case 'fire':
+			weaknesses.push('health');
+		break;
+		case 'explosive':
+		break;
+	}
+	return weaknesses;
+}
+
+function manageShot(wid) {
+	if(!currentTarget) {
+		return false;
+	}
+
+	let target = enemies.filter(function(enemy) {
+		return currentTarget.id == enemy.id;
+	})[0];
+	let firedWeapon = player.backpack.filter(function(weapon) {
+		return weapon.id == wid;
+	})[0];
+
+	let damages = getWeaponDamage(firedWeapon, target);
+	applyDamage(target, damages); // should be a method on character (private setter on hp and public method to modify)
+
+}
+
+function applyDamage(targetObj, damageObj) {
+	targetObj.hp -= damageObj.totalDamage;
+	if(targetObj.hp <= 0) {
+		targetObj.hp = 0;
+		alert('enemy dead');
+	}
+	refreshEnemies();
+
 }
 
 
+function makeEnemyDom(data) {
+	let op ='';
+	for (var i = 0; i < data.length; i++) {
+		let enemy = data[i];
+		let classesCss = 'one-enemy';
+		if(currentTarget != null && currentTarget.id == enemy.id) {
+			classesCss += ' is-target';
+		}
+		let enemyWeapons = getAllEquippedWeapons(enemy);
+			op += '<li  id="' + enemy.id + '" class="' + classesCss + '">';
+			op += '<div class="catch-enemy-click" data-id="' + enemy.id + '"></div>';
+			op += '<p>' + enemy.name + ' (lvl ' + enemy.level + ')</p>';
+			op += '<p>health	: ' + enemy.hp + '/' + enemy.stats.maxHp + '</p>';
+			op += '<p>shield	: ' + enemy.stats.shieldTempValue + '/' + enemy.stats.shieldTempValue + '</p>';
+			op += '<p>' + enemyWeapons[0].name + '</p>';
+		op += '<li>';
+	}
+	return op;
+}
 
+function refreshEnemies() {
+	let enemiesDOM = makeEnemyDom(enemies);
+	$('#enemies-container ul').html(enemiesDOM);
+}
 
 
 

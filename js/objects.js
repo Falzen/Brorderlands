@@ -1,10 +1,11 @@
 
 class Character {
     constructor(data) {
+        this.id = data.id;
         this.name = data.name;
         this.level = data.level;
-        this.stats = {
-        };
+        this.hp = data.hp; // maxHp should be in stats
+        this.stats = data.stats;
         this.equip = data.equip;
         this.backpack = data.backpack;
         this.money = data.money;

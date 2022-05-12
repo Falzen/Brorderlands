@@ -78,8 +78,6 @@ section {
 
 
 
-
-
 .one-weapon {
 	margin: 3px;
 	background-color: whitesmoke;
@@ -87,7 +85,8 @@ section {
 	user-select: none;
 	position: relative; /* for clickable overlay */
 }
-.one-weapon .catch-weapon-click {
+.catch-weapon-click,
+.catch-enemy-click {
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -168,16 +167,67 @@ section {
 
 
 
+
+
+
+
 #enemies-container {
 	min-height: 160px;
 	height: 25%;
 	background-color: rgba(220,220,220,0.3);
+
 }
+
+#enemies-container ul {
+	display: flex;
+	flex-flow: row wrap;
+	justify-content: center;
+}
+
+.one-enemy {
+	position: relative; /* for clickable overlay */
+    width: 200px;
+    padding: 6px;
+    margin: 2px;
+    background-color: lightpink;
+    text-align: center;
+}
+
+.one-enemy.is-target {
+	box-shadow: 0 0 26px 3px red;
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 #noMansLand {
 	height: 50%;
 	background-color: rgba(160,160,160,0.3);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 #player-side {
 	min-height: 160px;
