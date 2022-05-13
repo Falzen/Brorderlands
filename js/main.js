@@ -172,6 +172,7 @@ var playerData = {
 	id: ++characterIdCpt,
 	name: 'Roland',
 	level: '1',
+	isAlive: true,
 	hp: 90,
 	stats: {
 		maxHp: 90,
@@ -192,6 +193,7 @@ var enemiesDataList = [{
 	id: ++characterIdCpt,
 	name: 'Bandit recrue',
 	level: '1',
+	isAlive: true,
 	hp: 35,
 	stats: {
 		maxHp: 35,
@@ -207,6 +209,7 @@ var enemiesDataList = [{
 	id: ++characterIdCpt,
 	name: 'Bandit recrue',
 	level: '1',
+	isAlive: true,
 	hp: 35,
 	stats: {
 		maxHp: 35,
@@ -393,7 +396,8 @@ function applyDamage(targetObj, damageObj) {
 	targetObj.hp -= damageObj.totalDamage;
 	if(targetObj.hp <= 0) {
 		targetObj.hp = 0;
-		alert('enemy dead');
+		console.log('targetObj.id : ', targetObj.id)
+		targetObj.isAlive = false;
 	}
 	refreshEnemies();
 
@@ -408,10 +412,16 @@ function makeEnemyDom(data) {
 		if(currentTarget != null && currentTarget.id == enemy.id) {
 			classesCss += ' is-target';
 		}
+		if(!enemy.isAlive) {
+			classesCss += ' is-dead';	
+		}
+		let healthBarWidth = (100*enemy.hp) / (1*enemy.stats.maxHp);
 		let enemyWeapons = getAllEquippedWeapons(enemy);
-			op += '<li  id="' + enemy.id + '" class="' + classesCss + '">';
+
+		op += '<li  id="' + enemy.id + '" class="' + classesCss + '">';
 			op += '<div class="catch-enemy-click" data-id="' + enemy.id + '"></div>';
 			op += '<p>' + enemy.name + ' (lvl ' + enemy.level + ')</p>';
+			op += '<div class="health-bar" data-hp="' + enemy.hp + '" data-hpmax="' + enemy.stats.maxHp + '"><div class="health-bar-content" style="width: ' +healthBarWidth+ '%;"></div></div>';
 			op += '<p>health	: ' + enemy.hp + '/' + enemy.stats.maxHp + '</p>';
 			op += '<p>shield	: ' + enemy.stats.shieldTempValue + '/' + enemy.stats.shieldTempValue + '</p>';
 			op += '<p>' + enemyWeapons[0].name + '</p>';

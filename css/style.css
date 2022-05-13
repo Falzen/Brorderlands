@@ -197,8 +197,22 @@ section {
 	box-shadow: 0 0 26px 3px red;
 }
 
+.health-bar {
+	height:  15px;
+	width:  100%;
+	background-color: black;
+}
+.health-bar-content {
+	height:  15px;
+	width:  100%;
+	background-color: red;
+}
 
-
+.one-enemy.is-dead {
+	filter:  grayscale(1);
+	transform-origin: bottom;
+	transform-origin: rotateX(-45deg);
+}
 
 
 

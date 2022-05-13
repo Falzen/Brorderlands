@@ -9,6 +9,10 @@ class Character {
         this.equip = data.equip;
         this.backpack = data.backpack;
         this.money = data.money;
+        this.isAlive = data.isAlive;
+        this.takeDamage = function(amount) {
+            console.log('player takes damage : ', damage);
+        }
     }
 }
 
