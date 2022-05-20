@@ -8,15 +8,11 @@ $(document).ready(function() {
 
 function init() {
 	setWeaponIds();
-	player = new Player(playerData);
-	for(let i=0; i<enemiesDataList.length; i++) {
-		enemies.push(new Character(enemiesDataList[i]));
-	}
-	for(let i=0; i<enemies.length; i++) {
-		enemies[i].equip.weaponIds.push(enemies[i].backpack[0]?.id);
-	}
+	
+
 	console.log('enemies : ', enemies);
 	initPlayer();
+	initEnemies();
 	fillInventory();
 	setEventListeners();
 
@@ -42,6 +38,7 @@ function setEventListeners() {
 		showFight = true;
 		refreshEquippedWeapons();
 		manageScreen();
+		initFight();
 	});
 
 	$('body').on('click', '.one-weapon', function(ev) {
@@ -175,6 +172,14 @@ var playerData = {
 	isAlive: true,
 	hp: 90,
 	stats: {
+		initiativeLastRoll: 0,
+		initiativeBonus: 4,
+		agility: {
+			score: 14,
+			bonus: 2,
+		},
+		weaponHandling: 12,
+		luck: 11,
 		maxHp: 90,
 		shieldTempValue: 210
 	},
@@ -196,10 +201,18 @@ var enemiesDataList = [{
 	isAlive: true,
 	hp: 35,
 	stats: {
+		initiativeLastRoll: 0,
+		initiativeBonus: 1,
+		agility: {
+			score: 11,
+			bonus: 0,
+		},
+		weaponHandling: 9,
+		luck: 10,
 		maxHp: 35,
 		shieldTempValue: 70
 	},
-	backpack: [getRandomWeapon()],
+	backpack: [],
 	equip: {
 		weaponIds: [],
 		shieldId: null,
@@ -210,12 +223,20 @@ var enemiesDataList = [{
 	name: 'Bandit recrue',
 	level: '1',
 	isAlive: true,
-	hp: 35,
+	hp: 55,
 	stats: {
-		maxHp: 35,
+		initiativeLastRoll: 0,
+		initiativeBonus: 2,
+		agility: {
+			score: 13,
+			bonus: 1,
+		},
+		weaponHandling: 14,
+		luck: 8,
+		maxHp: 55,
 		shieldTempValue: 70
 	},
-	backpack: [getRandomWeapon()],
+	backpack: [],
 	equip: {
 		weaponIds: [],
 		shieldId: null,
@@ -226,11 +247,24 @@ var enemiesDataList = [{
 var enemies = [];
 
 function initPlayer() {
+	player = new Player(playerData);
 	player.backpack.push(getRandomWeapon());
 	player.backpack.push(getRandomWeapon());
 	player.backpack.push(getRandomWeapon());
 	player.backpack.push(getRandomWeapon());
 	player.backpack.push(getRandomWeapon());
+}
+
+function initEnemies() {
+	for(let i=0; i<enemiesDataList.length; i++) {
+		enemies.push(new Character(enemiesDataList[i]));
+	}
+
+	for(let i=0; i<enemies.length; i++) {
+		enemies[i].backpack.push(getRandomWeapon());
+		enemies[i].backpack.push(getRandomWeapon());
+		enemies[i].equip.weaponIds.push(enemies[i].backpack[0].id);
+	}
 }
 
 
@@ -240,8 +274,8 @@ function initPlayer() {
 function getRandomWeapon() {
 	let randomWeaponsType = getRandomMapKey(allWeaponsMap);
 	let randomWeaponList = allWeaponsMap.get(randomWeaponsType);
-	let randomWeapon = randomWeaponList[getRandomInt(0,randomWeaponList.length-1)];
-	return randomWeapon;
+	let randomWeaponData = randomWeaponList[getRandomInt(0,randomWeaponList.length-1)];
+	return randomWeaponData;
 }
 function getRandomMapKey(theMap) {
     let keys = Array.from(theMap.keys());
@@ -302,7 +336,7 @@ function refreshEquippedWeapons() {
 					op += '<br/><span>(' + w.bonus + ')</span>';
 				}
 			op += '</div>';
-			op += '<button onclick="manageShot(' + w.id + ')">Fire</button>';
+			op += '<button onclick="managePlayerShot(' + w.id + ')">Fire</button>';
 		op += '</li>';
 	}
 	$('#equipped-weapons-container ul').html(op);
@@ -375,7 +409,7 @@ function getweaknessesByAttackType(type) {
 	return weaknesses;
 }
 
-function manageShot(wid) {
+function managePlayerShot(wid) {
 	if(!currentTarget) {
 		return false;
 	}
@@ -386,6 +420,11 @@ function manageShot(wid) {
 	let firedWeapon = player.backpack.filter(function(weapon) {
 		return weapon.id == wid;
 	})[0];
+
+	manageShot(target, firedWeapon);
+}
+
+function manageShot(target, firedWeapon) {
 
 	let damages = getWeaponDamage(firedWeapon, target);
 	applyDamage(target, damages); // should be a method on character (private setter on hp and public method to modify)
@@ -408,7 +447,7 @@ function makeEnemyDom(data) {
 	let op ='';
 	for (var i = 0; i < data.length; i++) {
 		let enemy = data[i];
-		let classesCss = 'one-enemy';
+		let classesCss = 'one-char one-enemy';
 		if(currentTarget != null && currentTarget.id == enemy.id) {
 			classesCss += ' is-target';
 		}
@@ -418,7 +457,7 @@ function makeEnemyDom(data) {
 		let healthBarWidth = (100*enemy.hp) / (1*enemy.stats.maxHp);
 		let enemyWeapons = getAllEquippedWeapons(enemy);
 
-		op += '<li  id="' + enemy.id + '" class="' + classesCss + '">';
+		op += '<li id="enemy_' + enemy.id + '" class="' + classesCss + '">';
 			op += '<div class="catch-enemy-click" data-id="' + enemy.id + '"></div>';
 			op += '<p>' + enemy.name + ' (lvl ' + enemy.level + ')</p>';
 			op += '<div class="health-bar" data-hp="' + enemy.hp + '" data-hpmax="' + enemy.stats.maxHp + '"><div class="health-bar-content" style="width: ' +healthBarWidth+ '%;"></div></div>';
