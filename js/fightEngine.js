@@ -17,14 +17,23 @@ function initFight() {
 
 	fs = fightSettings;
 
-
 	// start fight loop (until fs.isFightOver == true)
-	fightEngineLoop();
+	wait(1000, fightEngineLoop);
+}
+
+function wait(ms, callback) {
+	setTimeout(() => {
+		callback();
+	}, ms);
 }
 
 function fightEngineLoop() {
+	console.log('fightEngineLoop');
 	let character = fs.entities[fs.whoseTurnIndex];
-	fs.isPlayerTurn = character.id == player.id
+		prompt('character.name : ', character.name);
+
+	fs.isPlayerTurn = character.id == player.id;
+		prompt('fs.isPlayerTurn : ', fs.isPlayerTurn);
 
 	doTurn(character);
 
@@ -46,12 +55,29 @@ function doTurn(character) {
 	// enemy turn
 	if(!fs.isPlayerTurn) {
 		doEnemyturn(character);
+		fs.whoseTurnIndex = getNextEntityIndex();
 	} else {
-		let action = prompt('your turn ! 2 choices : "shoot" or "reload". What will it be?');
-		alert(action + ' !!!');
+		alert('player turn !');
+		currentTarget = enemies[0];
+		wait(500, ()=> {
+			managePlayerShot(player.equip.weaponIds[0]);
+		});
+		wait(1500, ()=> {
+			managePlayerShot(player.equip.weaponIds[0]);
+		});
+
+		wait(1500, () => {
+			alert(' end player turn');
+		});
+		wait(2000, () => {
+			resumeFight();
+		});
 	}
+}
 
-
+function resumeFight() {
+	fs.whoseTurnIndex = getNextEntityIndex();
+	fightEngineLoop();
 }
 
 function rollInitiative(arr) {

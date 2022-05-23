@@ -4,6 +4,7 @@ var smgsList = [
     name: 'Maliwan Deadly Pulsar',
     rarity: 'White',
     dmg: '2d6',
+    mag: 6,
     bonus: '1d4 Corrosive/Incendiary'
   },
   {
@@ -11,6 +12,7 @@ var smgsList = [
     name: 'Hyperion Precision Transmurdera',
     rarity: 'White',
     dmg: '2d6',
+    mag: 6,
     bonus: null
   },
   {
@@ -18,6 +20,7 @@ var smgsList = [
     name: 'Tediore Efficient Ace',
     rarity: 'White',
     dmg: '2d6',
+    mag: 6,
     bonus: null
   },
   {
@@ -25,6 +28,7 @@ var smgsList = [
     name: 'Tediore Precision Ace',
     rarity: 'White',
     dmg: '2d6',
+    mag: 6,
     bonus: null
   },
   {
@@ -32,6 +36,7 @@ var smgsList = [
     name: 'Maliwan Compact Pulsar',
     rarity: 'Green',
     dmg: '2d6',
+    mag: 6,
     bonus: '1d4 Shock'
   },
   {
@@ -39,6 +44,7 @@ var smgsList = [
     name: 'Dahl Electric Falcon',
     rarity: 'Purple',
     dmg: '2d6',
+    mag: 6,
     bonus: '1d4 Shock'
   },
   {
@@ -46,6 +52,7 @@ var smgsList = [
     name: 'Hyperion Detonating Transmurdera',
     rarity: 'White',
     dmg: '2d6',
+    mag: 6,
     bonus: '1d4 Explosive'
   },
   {
@@ -53,6 +60,7 @@ var smgsList = [
     name: 'Hyperion Precision Transmurdera',
     rarity: 'Green',
     dmg: '2d6',
+    mag: 6,
     bonus: null
   },
   {
@@ -60,6 +68,7 @@ var smgsList = [
     name: 'Tediore Nuclear Ace',
     rarity: 'White',
     dmg: '2d6',
+    mag: 6,
     bonus: '1d4 Slag'
   },
   {
@@ -67,6 +76,7 @@ var smgsList = [
     name: 'Tediore Detonating Ace',
     rarity: 'White',
     dmg: '2d6',
+    mag: 6,
     bonus: '1d4 Explosive'
   },
   {
@@ -74,6 +84,7 @@ var smgsList = [
     name: 'Maliwan Endless Pulsar',
     rarity: 'White',
     dmg: '2d6',
+    mag: 6,
     bonus: '1d4 Corrosive/Cryo'
   },
   {
@@ -81,6 +92,7 @@ var smgsList = [
     name: 'Maliwan Deadly Pulsar',
     rarity: 'White',
     dmg: '2d6',
+    mag: 6,
     bonus: '1d4 Corrosive/Cryo'
   },
   {
@@ -88,6 +100,7 @@ var smgsList = [
     name: 'Dahl Deadly Falcon',
     rarity: 'White',
     dmg: '2d6',
+    mag: 6,
     bonus: null
   },
   {
@@ -95,6 +108,7 @@ var smgsList = [
     name: 'Maliwan Deadly Pulsar',
     rarity: 'Purple',
     dmg: '2d6',
+    mag: 6,
     bonus: '1d4 Shock/Incendiary'
   },
   {
@@ -102,6 +116,7 @@ var smgsList = [
     name: 'Maliwan Precision Pulsar',
     rarity: 'White',
     dmg: '2d6',
+    mag: 6,
     bonus: '1d4 Shock/Incendiary'
   },
   {
@@ -109,6 +124,7 @@ var smgsList = [
     name: 'Dahl Endless Falcon',
     rarity: 'White',
     dmg: '2d6',
+    mag: 6,
     bonus: null
   },
   {
@@ -116,6 +132,7 @@ var smgsList = [
     name: 'Hyperion Electric Transmurdera',
     rarity: 'Orange',
     dmg: '2d6',
+    mag: 6,
     bonus: '1d4 Shock'
   },
   {
@@ -123,6 +140,7 @@ var smgsList = [
     name: 'Tediore Deadly Ace',
     rarity: 'Green',
     dmg: '2d6',
+    mag: 6,
     bonus: null
   },
   {
@@ -130,6 +148,7 @@ var smgsList = [
     name: 'Dahl Bladed Falcon',
     rarity: 'White',
     dmg: '2d6',
+    mag: 6,
     bonus: null
   },
   {
@@ -137,6 +156,7 @@ var smgsList = [
     name: 'Dahl Precision Falcon',
     rarity: 'Green',
     dmg: '2d6',
+    mag: 6,
     bonus: null
   },
   {
@@ -144,6 +164,7 @@ var smgsList = [
     name: 'Tediore Precision Ace',
     rarity: 'White',
     dmg: '2d6',
+    mag: 6,
     bonus: null
   },
   {
@@ -151,6 +172,7 @@ var smgsList = [
     name: 'Maliwan Endless Pulsar',
     rarity: 'Green',
     dmg: '2d6',
+    mag: 6,
     bonus: '1d4 Incendiary/Shock'
   },
   {
@@ -158,6 +180,7 @@ var smgsList = [
     name: 'Maliwan Deadly Pulsar',
     rarity: 'White',
     dmg: '2d6',
+    mag: 6,
     bonus: '1d4 Cryo/Shock'
   },
   {
@@ -165,6 +188,7 @@ var smgsList = [
     name: 'Hyperion Detonating Transmurdera',
     rarity: 'Green',
     dmg: '2d6',
+    mag: 6,
     bonus: '1d4 Explosive'
   },
   {
@@ -172,6 +196,7 @@ var smgsList = [
     name: 'Tediore Endless Ace',
     rarity: 'White',
     dmg: '2d6',
+    mag: 6,
     bonus: null
   },
   {
@@ -179,6 +204,7 @@ var smgsList = [
     name: 'Maliwan Endless Pulsar',
     rarity: 'White',
     dmg: '2d6',
+    mag: 6,
     bonus: '1d4 Shock'
   },
   {
@@ -186,6 +212,7 @@ var smgsList = [
     name: 'Tediore Precision Ace',
     rarity: 'Green',
     dmg: '2d6',
+    mag: 6,
     bonus: null
   },
   {
@@ -193,6 +220,7 @@ var smgsList = [
     name: 'Dahl Efficient Falcon',
     rarity: 'White',
     dmg: '2d6',
+    mag: 6,
     bonus: null
   },
   {
@@ -200,6 +228,7 @@ var smgsList = [
     name: 'Hyperion Endless Transmurdera',
     rarity: 'White',
     dmg: '2d6',
+    mag: 6,
     bonus: null
   },
   {
@@ -207,6 +236,7 @@ var smgsList = [
     name: 'Maliwan Endless Pulsar',
     rarity: 'White',
     dmg: '2d6',
+    mag: 6,
     bonus: '1d4 Incendiary/Corrosive'
   },
   {
@@ -214,6 +244,7 @@ var smgsList = [
     name: 'Tediore Endless Ace',
     rarity: 'Purple',
     dmg: '2d6',
+    mag: 6,
     bonus: null
   },
   {
@@ -221,6 +252,7 @@ var smgsList = [
     name: 'Dahl Deadly Falcon',
     rarity: 'Green',
     dmg: '2d6',
+    mag: 6,
     bonus: null
   },
   {
@@ -228,6 +260,7 @@ var smgsList = [
     name: 'Tediore Icy Ace',
     rarity: 'Green',
     dmg: '2d6',
+    mag: 6,
     bonus: '1d4 Cryo'
   },
   {
@@ -235,6 +268,7 @@ var smgsList = [
     name: 'Tediore Icy Ace',
     rarity: 'Green',
     dmg: '2d6',
+    mag: 6,
     bonus: '1d4 Cryo'
   },
   {
@@ -242,6 +276,7 @@ var smgsList = [
     name: 'Dahl Icy Falcon',
     rarity: 'Green',
     dmg: '2d6',
+    mag: 6,
     bonus: '1d4 Cryo'
   },
   {
@@ -249,6 +284,7 @@ var smgsList = [
     name: 'Dahl Deadly Falcon',
     rarity: 'Blue',
     dmg: '2d6',
+    mag: 6,
     bonus: null
   },
   {
@@ -256,6 +292,7 @@ var smgsList = [
     name: 'Hyperion Icy Transmurdera',
     rarity: 'White',
     dmg: '2d6',
+    mag: 6,
     bonus: '1d4 Cryo'
   },
   {
@@ -263,6 +300,7 @@ var smgsList = [
     name: 'Maliwan Deadly Pulsar',
     rarity: 'Green',
     dmg: '2d6',
+    mag: 6,
     bonus: '1d4 Cryo'
   },
   {
@@ -270,6 +308,7 @@ var smgsList = [
     name: 'Hyperion Deadly Transmurdera',
     rarity: 'White',
     dmg: '2d6',
+    mag: 6,
     bonus: null
   },
   {
@@ -277,6 +316,7 @@ var smgsList = [
     name: 'Dahl Nuclear Falcon',
     rarity: 'Orange',
     dmg: '2d6',
+    mag: 6,
     bonus: '1d4 Slag'
   },
   {
@@ -284,6 +324,7 @@ var smgsList = [
     name: 'Tediore Burning Ace',
     rarity: 'Green',
     dmg: '2d6',
+    mag: 6,
     bonus: '1d4 Incendiary'
   },
   {
@@ -291,6 +332,7 @@ var smgsList = [
     name: 'Tediore Endless Ace',
     rarity: 'White',
     dmg: '2d6',
+    mag: 6,
     bonus: null
   },
   {
@@ -298,6 +340,7 @@ var smgsList = [
     name: 'Maliwan Endless Pulsar',
     rarity: 'White',
     dmg: '2d6',
+    mag: 6,
     bonus: '1d4 Cryo'
   },
   {
@@ -305,6 +348,7 @@ var smgsList = [
     name: 'Maliwan Precision Pulsar',
     rarity: 'White',
     dmg: '2d6',
+    mag: 6,
     bonus: '1d4 Incendiary'
   },
   {
@@ -312,6 +356,7 @@ var smgsList = [
     name: 'Dahl Efficient Falcon',
     rarity: 'White',
     dmg: '2d6',
+    mag: 6,
     bonus: null
   },
   {
@@ -319,6 +364,7 @@ var smgsList = [
     name: 'Dahl Endless Falcon',
     rarity: 'White',
     dmg: '2d6',
+    mag: 6,
     bonus: null
   },
   {
@@ -326,6 +372,7 @@ var smgsList = [
     name: 'Maliwan Precision Pulsar',
     rarity: 'White',
     dmg: '2d6',
+    mag: 6,
     bonus: '1d4 Incendiary'
   },
   {
@@ -333,6 +380,7 @@ var smgsList = [
     name: 'Maliwan Efficient Pulsar',
     rarity: 'White',
     dmg: '2d6',
+    mag: 6,
     bonus: '1d4 Corrosive/Shock'
   },
   {
@@ -340,6 +388,7 @@ var smgsList = [
     name: 'Maliwan Bladed Pulsar',
     rarity: 'Green',
     dmg: '2d6',
+    mag: 6,
     bonus: '1d4 Incendiary'
   },
   {
@@ -347,6 +396,7 @@ var smgsList = [
     name: 'Dahl Precision Falcon',
     rarity: 'White',
     dmg: '2d6',
+    mag: 6,
     bonus: null
   }
 ];

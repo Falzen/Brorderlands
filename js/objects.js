@@ -40,16 +40,37 @@ class BuyAndSell_Methods {
 
 
 
+class Weapon extends BuyAndSell_Methods {
+    constructor(data) {
+        super(data);
+        this.id = data.id;
+        this.name = data.name;
+        this.type = data.type;
+        this.rarity = data.rarity;
+        this.dmg = data.dmg;
+        this.bonus = data.bonus;
+        this.description = data.description;
+        this.magazine = data.mag ? data.mag : 4;
+    }
+    //  doEffect(event, rivetsBinding) {
+    //      this.doEffect(event, rivetsBinding);
+    //  }
+}
+
+
+
+
+
 class Item_Entity extends BuyAndSell_Methods {
     constructor(data) {
         super(data);
-    	this.name = data.name;
-		this.description = data.description;
-		this.isAvailableInFight = data.isAvailableInFight;
-		this.iconPath = data.iconPath;
-		this.quantity = data.quantity;
-		this.doEffect = data.doEffect;
-	}
+        this.name = data.name;
+        this.description = data.description;
+        this.isAvailableInFight = data.isAvailableInFight;
+        this.iconPath = data.iconPath;
+        this.quantity = data.quantity;
+        this.doEffect = data.doEffect;
+    }
     //  doEffect(event, rivetsBinding) {
     //      this.doEffect(event, rivetsBinding);
     //  }

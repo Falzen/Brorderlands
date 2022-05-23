@@ -36,8 +36,8 @@ function setEventListeners() {
 		showInventory = false;
 		showShop = false;
 		showFight = true;
-		refreshEquippedWeapons();
 		manageScreen();
+		refreshPlayerEquippedWeapons();
 		initFight();
 	});
 
@@ -139,10 +139,11 @@ var screen = {
 
 let allWeaponsMap = new Map();
 allWeaponsMap.set('smgs', smgsList);
-allWeaponsMap.set('snipers', snipersList);
-allWeaponsMap.set('assaultRifles', assaultRiflesList);
-allWeaponsMap.set('shotguns', shotgunsList);
-allWeaponsMap.set('pistols', pistolsList);
+// no mag size yet
+// allWeaponsMap.set('snipers', snipersList);
+// allWeaponsMap.set('assaultRifles', assaultRiflesList);
+// allWeaponsMap.set('shotguns', shotgunsList);
+// allWeaponsMap.set('pistols', pistolsList);
 
 var weapons_types = allWeaponsMap.keys();
 var weaponIdCpt = 0;
@@ -196,7 +197,7 @@ var player;
 
 var enemiesDataList = [{
 	id: ++characterIdCpt,
-	name: 'Bandit recrue',
+	name: 'Bandit recrue 01',
 	level: '1',
 	isAlive: true,
 	hp: 35,
@@ -220,7 +221,7 @@ var enemiesDataList = [{
 	money: 80,
 },{
 	id: ++characterIdCpt,
-	name: 'Bandit recrue',
+	name: 'Bandit recrue 02',
 	level: '1',
 	isAlive: true,
 	hp: 55,
@@ -315,7 +316,7 @@ function fillInventory() {
 }
 
 
-function refreshEquippedWeapons() {
+function refreshPlayerEquippedWeapons() {
 	let op = '';
 	let currentlyEquippedWeapons = [];
 	for (var i = 0; i < player.backpack.length; i++) {
@@ -421,13 +422,17 @@ function managePlayerShot(wid) {
 		return weapon.id == wid;
 	})[0];
 
-	manageShot(target, firedWeapon);
+	let bulletsLeft = manageShot(target, firedWeapon);
+	
 }
 
 function manageShot(target, firedWeapon) {
 
 	let damages = getWeaponDamage(firedWeapon, target);
+	prompt('shot damages : ', JSON.stringify(damages));
 	applyDamage(target, damages); // should be a method on character (private setter on hp and public method to modify)
+	firedWeapon.magazine -= roll(6);
+	return firedWeapon.magazine > 0;
 
 }
 

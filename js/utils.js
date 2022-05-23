@@ -123,3 +123,30 @@ function readCookie(name) {
 function eraseCookie(name) {
 	createCookie(name,"",-1);
 }
+
+
+
+
+// debug stats purpose
+function roll(d) {
+	return getRandomInt(1, d);
+}
+
+function testDice(nb) {
+	let totalSum = 0;
+	let cpt = 0;
+	while (totalSum < nb){
+		totalSum += roll(nb);
+		cpt++;
+	}
+	return cpt;
+}
+
+function doStat(diceType, times) {
+	let total = 0;
+	for(let i=0; i<times; i++) {
+		total += testDice(diceType);
+	}
+	console.log('stats for ' + times + 'd' + diceType + ' : ' + total/times);
+}
+doStat(4, 100);
